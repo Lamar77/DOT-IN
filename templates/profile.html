@@ -9,7 +9,7 @@
 
               {% if current_user.profile_pic %}
 
-              <img src="{{url_for('static', filename='upload/' + bird['User']+'.png')}}" alt="Image">
+              <img src="{{url_for('static', filename='static/upload/' + bird['User']+'.png')}}" alt="Image">
 
               {% else %}
 
@@ -61,12 +61,12 @@
 
               <br/>
 
-<div class="card">
+<!-- <div class="card">
 <div class="card-header">
   Update Profile
 </div>
 <div class="card-body">
-</div>
+</div> -->
 
 
 
@@ -77,11 +77,11 @@
 
 
               <br>       
-              <form method="post" enctype="multipart/form-data">
+              <!-- <form method="post" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input type="submit" value="Up load">
-              </form>
-              {% else %}
+              </form> -->
+{% else %}
         {# <nav class="level is-mobile">
                   <div class="level-left"> 
                     <nav class="level is-mobile">
@@ -106,13 +106,13 @@
 
               <br/>
 
-{# <!-- <div class="card">
+ <div class="card">
 <div class="card-header">
   Update Profile
 </div>
 <div class="card-body">
-</div> -->
-#}
+</div>
+
 
 
 
@@ -122,12 +122,11 @@
 
 
               <br>       
-             {# <!-- <form method="post" enctype="multipart/form-data">
+             <form method="post" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input type="submit" value="Up load">
-              </form> --> #}
-
-              {% endif %}
+              </form> 
+{% endif %}
           </div>
       </article>
   </div>

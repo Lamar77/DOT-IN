@@ -85,15 +85,16 @@ class SqliteDBnexDatabase :
     return self.execute_hash_query("INSERT INTO request (SenderId, ReceiverId) VALUES (?,?)",sender_id,receiver_id)
          
 
-  def cancel_friend_request(self,send_id,receiver_id):
-    return self.execute_hash_query("DELETE FROM request WHERE SenderId=? And ReceiverId=?",send_id,receiver_id)  
+  def cancel_friend_request(self,sender_id,receiver_id):
+    return self.execute_hash_query("DELETE FROM request WHERE SenderId=? And ReceiverId=?",sender_id,receiver_id)  
  
-  def add_a_friend(self, user_id,friend_id,):  
-           self.execute_hash_query("INSERT INTO friends (UserId, friendId) VALUES (?,?)",user_id,friend_id),  
+  def add_a_friend(self,receiver_id,sender_id):
+           print(receiver_id,sender_id)
+           self.execute_hash_query("INSERT INTO friends (ReceiverId, SenderId) VALUES (?,?)",receiver_id,sender_id), 
+          #  self.execute_hash_query("INSERT INTO friends (UserId, friendId) VALUES (?,?)",user_id,friend_id),  
           #  self.execute_hash_query("DELETE FROM requests WHERE senderID = ? AND receiverID = ?", senderId, receiverId) 
    
   def all_requested_friends(self,user_id):
-    print(user_id)
     result = self.execute_query("SELECT ReceiverId FROM Request WHERE SenderId = ?", user_id)
     return [x['ReceiverId'] for x in result]
 

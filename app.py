@@ -186,10 +186,8 @@ def profile(user):
             new_file_path = os.path.join(app.config['UPLOAD_DIRECTORY'], "%s.png" % user)
             original.save(new_file_path, format="png")
     user_data = db.get_user_by_Id(current_user.id)[0]
-    bird_data = db.get_id_by_user(user)
-
     friend_requests = db.all_requested_friends(current_user.id)
-    print(friend_requests)
+    bird_data = db.get_id_by_user(user)
     if (len(bird_data) > 0):
        bird = bird_data[0]
        posts = db.get_posts_by_Id(current_user.id)
@@ -262,11 +260,11 @@ def cancel_a_friend_request(sender_id):
     user = db.get_user_by_Id(sender_id)[0]['BirdId']
     return redirect(url_for('friend_request', user=user))
  
-@app.route('/add_a_friend/<int:friend_id>' )
+@app.route('/add_a_friend/<int:sender_id>' )
 @login_required
-def add_a_friend(friend_id):
-    db.add_a_friend(current_user.id,friend_id)
-    user = db.get_user_by_Id(friend_id)[0]['BirdId'] 
+def add_a_friend(sender_id):
+    db.add_a_friend(current_user.id,sender_id)
+    user = db.get_user_by_Id(sender_id)[0]['BirdId']
     return redirect(url_for('friend_request', user=user ))
 
 
@@ -293,9 +291,9 @@ def create_message():
 @app.route('/request')
 @login_required
 def friend_request():
-    friend_requests = db.friend_request(current_user.id) 
+    friend_requests = db.friend_request(current_user.id)
     user = db.get_user_by_Id(current_user.id)[0]
-    return render_template('request.html',friend_requests=friend_requests,user=user )
+    return render_template('request.html',friend_requests=friend_requests,user=user)
 
 @app.route('/search_users', methods=['GET', 'POST'])
 @login_required
