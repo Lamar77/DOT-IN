@@ -265,7 +265,8 @@ def cancel_a_friend_request(sender_id):
 def add_a_friend(sender_id):
     db.add_a_friend(current_user.id,sender_id)
     user = db.get_user_by_Id(sender_id)[0]['BirdId']
-    return redirect(url_for('friend_request', user=user ))
+    
+    return redirect(url_for('friend_request', user=user))
 
 
   
@@ -293,6 +294,7 @@ def create_message():
 def friend_request():
     friend_requests = db.friend_request(current_user.id)
     user = db.get_user_by_Id(current_user.id)[0]
+    # bird = db.get_id_by_user(user)
     return render_template('request.html',friend_requests=friend_requests,user=user)
 
 @app.route('/search_users', methods=['GET', 'POST'])

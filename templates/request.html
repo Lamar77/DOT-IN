@@ -93,10 +93,10 @@
         </div>
 
        <div class="buttons">
-          <a class="button is-primary"  href="{{url_for('add_a_friend', sender_id=user['BirdId'])}}">
+          <a class="button is-primary"  href="{{url_for('add_a_friend', sender_id=friend['BirdId'])}}">
             <strong>add</strong>
           </a>
-          <a class="button is-light" href="{{url_for('cancel_a_friend_request', sender_id=user['BirdId'])}}"> 
+          <a class="button is-light" href="{{url_for('cancel_a_friend_request', sender_id=friend['BirdId'])}}"> 
             Reject
           </a>
         </div>

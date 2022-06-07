@@ -31,7 +31,12 @@ class SqliteDBnexDatabase :
     return self.execute_query("SELECT * FROM Birds WHERE BirdId = ?",BirdId) 
 
   def get_id_by_user(self, user):
-    return self.execute_query("SELECT * FROM Birds WHERE Name = ?", user) 
+    return self.execute_query("SELECT * FROM Birds WHERE Name = ?",user) 
+
+  def get_id_by_users(self, user):
+    return self.execute_query("SELECT * FROM Birds WHERE Name = ?",user)
+    
+   
  
 
      # if len(results) > 0:      
@@ -102,7 +107,7 @@ class SqliteDBnexDatabase :
    return self.execute_hash_query("DELETE FROM request WHERE SenderId=? And ReceiverId=?",sender_id,receiver_id)  
       
   def accept_friend_request(self,friend_id):
-    return self.execute_query("SELECT * FROM Birds INNER JOIN friends ON Birds.BirdId = friends.UserId AND friends.friendId = ?",friend_id)    
+    return self.execute_query("SELECT * FROM Birds INNER JOIN friends ON Birds.BirdId = friends.SenderId AND friends.ReceiverId = ?",friend_id)    
     
   def friends_count(self,userid,friend_id):
     return self.execute_query("SELECT COUNT(*) FROM friends WHERE UserId =? AND friendId =? ",userid,friend_id)
