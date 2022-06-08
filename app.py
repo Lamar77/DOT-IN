@@ -263,7 +263,11 @@ def cancel_a_friend_request(sender_id):
 @app.route('/add_a_friend/<int:sender_id>' )
 @login_required
 def add_a_friend(sender_id):
+    
     db.add_a_friend(current_user.id,sender_id)
+
+    db.cancel_friend_request(sender_id,current_user.id)
+
     user = db.get_user_by_Id(sender_id)[0]['BirdId']
     
     return redirect(url_for('friend_request', user=user))
