@@ -260,16 +260,12 @@ def cancel_a_friend_request(sender_id):
     user = db.get_user_by_Id(sender_id)[0]['BirdId']
     return redirect(url_for('friend_request', user=user))
  
-@app.route('/add_a_friend/<int:sender_id>' )
+@app.route('/add_a_friend/<int:sender_id>')
 @login_required
 def add_a_friend(sender_id):
-    
     db.add_a_friend(current_user.id,sender_id)
-
     db.cancel_friend_request(sender_id,current_user.id)
-
     user = db.get_user_by_Id(sender_id)[0]['BirdId']
-    
     return redirect(url_for('friend_request', user=user))
 
 
@@ -289,7 +285,7 @@ def message_chat():
 @app.route('/create_message', methods=['GET', 'POST'])
 @login_required
 def create_message(): 
-    message_content = request.form['message_      content'] 
+    message_content = request.form['message_content'] 
     db.insert_into_message(current_user.id, message_content)
     return redirect(url_for('message'))
 
@@ -309,7 +305,12 @@ def search_users():
     user = db.get_user_by_Id(current_user.id)[0]
     return render_template('user.html', user=user ,  users=search )
 
- 
+@app.route('/accept_friend')
+@login_required
+def accept_friend(): 
+    friends = db.accept_friend_request()
+    user = db.get_user_by_Id(current_user.id)[0] 
+    return render_template('friends.html',user=user, friends=friends)
 
 @app.route('/users')
 @login_required
@@ -325,12 +326,7 @@ def loings():
     user = db.get_user_by_Id(current_user.id)[0] 
     return render_template('logins.html', user=user , users=users)    
 
-@app.route('/accept_friend')
-@login_required
-def accept_friend(): 
-    friends = db.accept_friend_request(current_user.id)
-    user = db.get_user_by_Id(current_user.id)[0] 
-    return render_template('friends.html',user=user, friends=friends)
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
