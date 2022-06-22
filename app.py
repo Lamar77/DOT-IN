@@ -308,7 +308,7 @@ def search_users():
 @app.route('/accept_friend')
 @login_required
 def accept_friend(): 
-    friends = db.accept_friend_request()
+    friends = db.friend_list(current_user.id)
     user = db.get_user_by_Id(current_user.id)[0] 
     return render_template('friends.html',user=user, friends=friends)
 
