@@ -188,12 +188,13 @@ def profile(user):
     user_data = db.get_user_by_Id(current_user.id)[0]
     friend_requests = db.all_requested_friends(current_user.id)
     bird_data = db.get_id_by_user(user)
+    is_friend = db.is_friend_pair(current_user.id, bird_data[0]['BirdId'])
     if (len(bird_data) > 0):
        bird = bird_data[0]
        posts = db.get_posts_by_Id(current_user.id)
        if (posts == None):
            posts = []
-       return render_template('profile.html', title=bird['Name'], bird=bird, posts=posts, user=user_data, friend_requests=friend_requests )
+       return render_template('profile.html', title=bird['Name'], bird=bird, posts=posts, user=user_data, friend_requests=friend_requests, is_friend=is_friend)
     else:
        return "bird does not exist"
 # @app.route("/comments/<int:posts>")
@@ -308,7 +309,7 @@ def search_users():
 @app.route('/accept_friend')
 @login_required
 def accept_friend(): 
-    friends = db.accept_friend_request()
+    friends = db.friend_list(current_user.id)
     user = db.get_user_by_Id(current_user.id)[0] 
     return render_template('friends.html',user=user, friends=friends)
 

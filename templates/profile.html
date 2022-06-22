@@ -37,13 +37,21 @@
                       <div class="level-left">
                         <a class="level-item " data-birdid="{{bird['BirdId']}}" >
                          
-                          <button   class="button1" href="{{url_for('add_friend_request', receiver_id= bird['BirdId'])}}" >
+                          
                             {% if bird['BirdId'] in friend_requests %}
+                            <button class="button">
                               Friend request sent!
+                            </button>
+                            {% elif is_friend %}
+                            <button class="button">
+                                You are friends!
+                              </button>
                             {% else %}
+                            <button   class="button1" href="{{url_for('add_friend_request', receiver_id= bird['BirdId'])}}" >
                               Add Friend
+                            </button>
                             {% endif %}
-                          </button>
+                         
                     
                         </a>
                         <a class="level-item" >

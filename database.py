@@ -106,9 +106,24 @@ class SqliteDBnexDatabase :
   def cancel_a_friend_request(self,sender_id,receiver_id):
     return self.execute_hash_query("DELETE FROM request WHERE SenderId=? And ReceiverId=?",sender_id,receiver_id)  
       
-  def accept_friend_request(self):
-    return self.execute_query(" SELECT * FROM Birds INNER JOIN friends ON Birds.BirdId = friends.ReceiverId or Birds.BirdId = friends.SenderId") 
-    
+  def is_friend_pair(self,user_id1, user_id2):
+    print(user_id1, user_id2)
+    res = self.execute_query("""SELECT * FROM Friends 
+                    WHERE ReceiverId = ? AND SenderId = ? 
+                    OR SenderId = ? AND ReceiverId=?""", user_id1, user_id2, user_id1, user_id2)
+    if res and len(res):
+        return True
+    else:
+        return False
+
+  def friend_list(self, user_id):
+    return self.execute_query("""
+        SELECT Birds.Name, Birds.User, Birds.Bio, Birds.Age FROM 
+            (SELECT ReceiverId as UserId FROM friends WHERE SenderId = ?
+            UNION
+            SELECT SenderId as UserId FROM friends WHERE ReceiverId = ?) FID
+        INNER JOIN Birds ON FID.Userid = Birds.BirdId""", user_id, user_id) 
+            
   def friends_count(self,userid,friend_id):
     return self.execute_query("SELECT COUNT(*) FROM friends WHERE UserId =? AND friendId =? ",userid,friend_id)
   
