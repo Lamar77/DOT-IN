@@ -172,7 +172,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[-1].lower() in ['jpg','jpeg','gif','png']
  
-@app.route("/birds/<string:user>" )
+@app.route("/birds/<string:user>", methods=['GET', 'POST'])
 def profile(user):
     if request.method == 'POST':
             # process the image upload

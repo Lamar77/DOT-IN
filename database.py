@@ -18,7 +18,7 @@ class SqliteDBnexDatabase :
     self.execute_hash_query('CREATE TABLE IF NOT EXISTS "Likes" ( "User"	TEXT NOT NULL, "PostId"	INTEGER NOT NULL );') 
     self.execute_hash_query('CREATE TABLE IF NOT EXISTS "Messages" ( "MessageId"	TEXT NOT NULL, "UserId1"	TEXT NOT NULL, 	"UserId2"	TEXT NOT NULL, "Message"	INTEGER NOT NULL, "Date/Time"	TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY("MessageId"));') 
     self.execute_hash_query('CREATE TABLE IF NOT EXISTS "Posts" ("PostId"	INTEGER NOT NULL, "Texts"	TEXT NOT NULL, "BirdId" INTEGER NOT NULL, PRIMARY KEY("PostId" AUTOINCREMENT));')
-    self.execute_hash_query('CREATE TABLE IF NOT EXISTS "friends" ( "UserId"	INTEGER NOT NULL, "friendId"	INTEGER NOT NULL , PRIMARY KEY("BIrdId" AUTOINCREMENT));')
+    self.execute_hash_query('CREATE TABLE IF NOT EXISTS "friends" ("ReceiverId"	INTEGER NOT NULL,	"SenderId"	INTEGER NOT NULL);')
     self.execute_hash_query('CREATE TABLE IF NOT EXISTS "request" ( 	"SenderId"	INTEGER NOT NULL, 	"ReceiverId"	INTEGER NOT NULL );')
 
 
@@ -160,6 +160,8 @@ class SqliteDBnexDatabase :
   def already_liked(self,user, post_id):
       res = self.execute_query("""SELECT COUNT(*) FROM likes WHERE  PostId = ? AND User = ?""",post_id,user)
       return len(res) > 0
+  
+
     #  for row in cur:
     #     return (row[0] > 0)      
 
