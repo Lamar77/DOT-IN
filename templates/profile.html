@@ -7,9 +7,9 @@
           <figure class="media-left">
             <p class="image is-64x64">
 
-              {% if current_user.profile_pic %}
+              {% if current_user %}
 
-              <img src="{{url_for('static', filename='static/upload/' + bird['User']+'.png')}}" alt="Image">
+              <img src="{{url_for('static', filename='upload/' + user['Name']+'.png')}}" alt="Image">
 
               {% else %}
 
@@ -142,14 +142,15 @@
  
    
 <section class="mt-6">
+<p style="text-align: center;" class="subtitle"><strong>MY POSTS</strong></p> 
 {% for post in posts  %}
 <div class="box">
     <article class="media">
       <div class="media-left">
         <figure class="image is-64x64">
-          {% if current_user.profile_pic %}
+          {% if current_user %}
 
-          <img src="{{url_for('static', filename=post['User']+'.jpg') }}" alt="Image">
+          <img src="{{url_for('static', filename='upload/' + user['Name']+'.png')}}" alt="Image">
 
           {% else %}
 

@@ -1,6 +1,6 @@
 from builtins import classmethod, len, print
 import flask
-from flask import Flask, redirect, render_template, abort, request, request_started, url_for, send_from_directory 
+from flask import Flask, redirect, render_template, abort, request, request_started, url_for, send_from_directory,flash 
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user 
 from flask_wtf import FlaskForm 
 from wtforms import StringField, PasswordField, SubmitField, IntegerField,TextAreaField 
@@ -88,12 +88,15 @@ def login():
         username = form.username.data
         password = form.password.data
         bird = db.get_id_by_user(username)[0] 
+
         if bird and  check_password_hash(bird['PasswordHash'], password):
-
+            # if user!=user:
+            #     print(0000000)
+            #     flash('User not found')
+            # return redirect(url_for('signup'))
             user = User(bird['BirdId'])
-
             login_user(user)
-
+           
         flask.flash('Logged in successfully.')
 
         next = flask.request.args.get('next')
